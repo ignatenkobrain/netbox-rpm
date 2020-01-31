@@ -1,0 +1,23 @@
+[Unit]
+Description=NetBox Request Queue Worker
+Documentation=https://netbox.readthedocs.io/
+After=network.target
+
+[Service]
+Type=simple
+User=netbox
+Group=netbox
+DynamicUser=yes
+WorkingDirectory=/usr/share/netbox
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectHostname=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+LockPersonality=yes
+RestrictRealtime=yes
+PrivateMounts=yes
+ExecStart=/usr/share/netbox/manage.py rqworker
+
+[Install]
+WantedBy=multi-user.target

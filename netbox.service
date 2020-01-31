@@ -1,0 +1,27 @@
+[Unit]
+Description=NetBox WSGI Service
+Documentation=https://netbox.readthedocs.io/
+After=network.target
+
+[Service]
+Type=notify
+User=netbox
+Group=netbox
+DynamicUser=yes
+WorkingDirectory=/usr/share/netbox
+RuntimeDirectory=netbox
+PrivateTmp=yes
+PrivateUsers=yes
+ProtectHostname=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+LockPersonality=yes
+RestrictRealtime=yes
+PrivateMounts=yes
+ExecStart=/usr/bin/gunicorn --config /etc/netbox/gunicorn.py netbox.wsgi
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
